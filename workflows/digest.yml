@@ -1,0 +1,21 @@
+name: Morning Digest
+
+on:
+  schedule:
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+
+jobs:
+  send-digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install
+      - name: Run digest
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: node digest-runner.js
