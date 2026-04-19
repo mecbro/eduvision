@@ -1,0 +1,14 @@
+{
+  "name": "morning-digest",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "latest",
+    "@anthropic-ai/sdk": "latest",
+    "resend": "latest"
+  }
+}
