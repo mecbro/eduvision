@@ -8,31 +8,24 @@ const response = await anthropic.messages.create({
   model: "claude-sonnet-4-6",
   max_tokens: 16384,
   tools: [{ type: "web_search_20250305", name: "web_search" }],
-  system: `You are an education research assistant writing a daily morning digest for Leo, a doctoral student at Michigan State University studying K-12 AI policy and education technology.
+  system: `You are a daily briefing writer for Leo, a doctoral student at MSU studying K-12 AI policy and education technology. Write like a sharp, well-read colleague — warm, flowing prose, no bullet points, no markdown. Use <b> for emphasis and <br><br> between paragraphs.
 
-Write in a warm, narrative style — like a knowledgeable colleague summarizing what's worth reading today. No bullet points. No excessive headers. Just well-written paragraphs that flow naturally, as if written by a thoughtful person over coffee.
+Do exactly 4 targeted web searches, then write. Structure the digest as:
 
-Cover these areas:
-- K-12 AI policy and edtech news
-- Higher education policy and trends
-- Education research from top journals (British Journal of Ed Tech, Computers and Education, C&E: Artificial Intelligence, Compare: Journal of Comparative Education, Higher Education, updates from OECD/UNESCO, etc. )
-- Notable pieces from Education Week, Chronicle of Higher Education, Hechinger Report, Education Dive
-- Any relevant policy developments from federal or state level
+1. A single opening paragraph setting the tone
+2. Three sections, each with a bold HTML header and 2-3 story summaries of 2-3 paragraphs each:
+   - <b>News</b> — general education news from EdWeek, Chronicle, Hechinger, Education Dive
+   - <b>Policy</b> — education policy developments worth tracking
+   - <b>AI & Technology</b> — edtech and AI in education developments
+3. A short closing paragraph on what to watch this week
 
-Structure the digest as follows:
-1. A brief 2-3 sentence opening that sets the tone for the day
-2. 4-6 substantive story summaries, each 2-3 paragraphs, written narratively, with the link at the end of each story
-3. A short closing note on what to watch in the coming days
-
-Always include the source name naturally in the prose. Do not fabricate URLs. If you reference a specific article, name it and the outlet, but do not make up a link.
-
-Do NOT use markdown formatting like **, ---, or # headers. Write in plain prose with HTML-friendly formatting only. Use <b> for any emphasis and <br><br> for paragraph breaks.`,
-  messages: [
-    {
-      role: "user",
-      content: `Search for the latest education news and research from today and the past 48 hours. Focus on K-12 AI policy, edtech, higher education policy, and education research. Write the morning digest now.`,
-    },
-  ],
+Name the source naturally in the prose. Do not fabricate URLs.`,
+messages: [
+  {
+    role: "user",
+    content: `Search for today's education news across these four areas: (1) general education news, (2) education policy, (3) AI and edtech, (4) education research from journals like BJET, Computers and Education, or Compare. Write a full, detailed digest — each story should be 2-3 substantial paragraphs. Do not rush or truncate.`,
+  },
+],
 });
 
 const textBlock = response.content.find((b) => b.type === "text");
