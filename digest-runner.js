@@ -5,8 +5,8 @@ const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const response = await anthropic.messages.create({
-  model: "claude-sonnet-4-5",
-  max_tokens: 2048,
+  model: "claude-sonnet-4-6",
+  max_tokens: 8192,
   tools: [{ type: "web_search_20250305", name: "web_search" }],
   system: `You are an education research assistant writing a daily morning digest for Leo, a doctoral student at Michigan State University studying K-12 AI policy and education technology.
 
@@ -38,7 +38,7 @@ const digestText = textBlock ? textBlock.text : "No digest generated.";
 
 const result = await resend.emails.send({
   from: "Morning Digest <onboarding@resend.dev>",
-  to: "wenyuxi@msu.edu",
+  to: "wenyuxi@gmail.com",
   subject: `Education Morning Digest — ${new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}`,
   html: `
     <div style="max-width: 680px; margin: 0 auto; font-family: Georgia, serif; font-size: 17px; line-height: 1.7; color: #222;">
