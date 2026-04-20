@@ -6,7 +6,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 const response = await anthropic.messages.create({
   model: "claude-sonnet-4-6",
-  max_tokens: 4096,
+  max_tokens: 7000,
   tools: [{ type: "web_search_20250305", name: "web_search" }],
   system: `You are an education research assistant writing a daily morning digest for Leo, a doctoral student at Michigan State University studying K-12 AI policy and education technology.
 
@@ -24,7 +24,9 @@ Structure the digest as follows:
 2. 4-6 substantive story summaries, each 2-3 paragraphs, written narratively, with the link at the end of each story
 3. A short closing note on what to watch in the coming days
 
-Always include the source name naturally in the prose. Do not fabricate URLs. If you reference a specific article, name it and the outlet, but do not make up a link.`,
+Always include the source name naturally in the prose. Do not fabricate URLs. If you reference a specific article, name it and the outlet, but do not make up a link.
+
+Do NOT use markdown formatting like **, ---, or # headers. Write in plain prose with HTML-friendly formatting only. Use <b> for any emphasis and <br><br> for paragraph breaks.`,
   messages: [
     {
       role: "user",
