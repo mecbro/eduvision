@@ -10,24 +10,28 @@ const searchResponse = await anthropic.messages.create({
   model: "claude-sonnet-4-5",
   max_tokens: 4096,
   tools: [{ type: "web_search_20250305", name: "web_search" }],
-  system: `You are a research assistant. Search for today's education news and return detailed raw notes. Do exactly 4 searches:
+  system: `You are a research assistant. Search for today's education news across four areas:
 1. General education news (EdWeek, Chronicle, Hechinger, Education Dive)
 2. Education policy developments
 3. AI and edtech in education
 4. Recent education research from journals like BJET, Computers and Education, Compare
 
-For each search, return detailed notes on what you found — outlet name, story summary, key facts, and the URL if available. Return notes only, no prose writing.`,
+After searching, write detailed notes on everything you found — outlet name, story summary, key facts, and URLs. Write the notes as plain text paragraphs.`,
   messages: [
     {
       role: "user",
-      content: "Search for today's education news across all four areas and return your raw research notes.",
+      content: "Search for today's education news across all four areas and write up your research notes in full.",
     },
   ],
 });
 
-const notesBlock = searchResponse.content.find((b) => b.type === "text");
-const researchNotes = notesBlock ? notesBlock.text : "";
-console.log("Step 1 complete. Notes length:", researchNotes.length);
+const researchNotes = searchResponse.content
+  .filter((b) => b.type === "text")
+  .map((b) => b.text)
+  .join("\n\n");
+
+console.log("Step 1 complete. Notes length:", researchNotes.length, "chars");
+if (!researchNotes) console.log("WARNING: No notes extracted from Step 1");
 
 // Step 2: Write the digest from the notes
 console.log("Step 2: Writing the digest...");
@@ -56,7 +60,7 @@ Name sources naturally in prose. Include URLs from the research notes at the end
 
 const textBlock = digestResponse.content.find((b) => b.type === "text");
 const digestText = textBlock ? textBlock.text : "No digest generated.";
-console.log("Step 2 complete. Digest length:", digestText.length);
+console.log("Step 2 complete. Digest length:", digestText.length, "chars");
 
 // Step 3: Send the email
 const result = await resend.emails.send({
