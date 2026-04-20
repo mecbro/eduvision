@@ -36,7 +36,7 @@ Always include the source name naturally in the prose. Do not fabricate URLs. If
 const textBlock = response.content.find((b) => b.type === "text");
 const digestText = textBlock ? textBlock.text : "No digest generated.";
 
-await resend.emails.send({
+const result = await resend.emails.send({
   from: "Morning Digest <onboarding@resend.dev>",
   to: "wenyuxi@msu.edu",
   subject: `Education Morning Digest — ${new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}`,
@@ -54,4 +54,4 @@ await resend.emails.send({
   `,
 });
 
-console.log("Digest sent successfully.");
+console.log("Resend result:", JSON.stringify(result));
