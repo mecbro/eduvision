@@ -13,13 +13,13 @@ const response = await anthropic.messages.create({
 Do exactly 4 targeted web searches, then write. Structure the digest as:
 
 1. A single opening paragraph setting the tone
-2. Three sections, each with a bold HTML header and 2-3 story summaries of 2-3 paragraphs each:
+2. Three sections, each with a bold HTML header and 2-3 story summaries of 2-3 paragraphs each. For each paragraph, provide the link to the original story as well.
    - <b>News</b> — general education news from EdWeek, Chronicle, Hechinger, Education Dive
    - <b>Policy</b> — education policy developments worth tracking
    - <b>AI & Technology</b> — edtech and AI in education developments
 3. A short closing paragraph on what to watch this week
 
-Name the source naturally in the prose. Do not fabricate URLs.`,
+Name the source naturally in the prose. Do not fabricate URLs. Your digest should be at least 1000 words.`,
 messages: [
   {
     role: "user",
