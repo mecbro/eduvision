@@ -73,7 +73,7 @@ const result = await resend.emails.send({
         <h1 style="color: #18453B; font-size: 24px; margin: 0;">EduVision</h1>
         <p style="color: #888; font-size: 14px; margin: 4px 0 0;">${new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}</p>
       </div>
-      <div>${digestText}</div>
+      <div style="white-space: pre-wrap;">${digestText}</div>
       <div style="border-top: 1px solid #ddd; margin-top: 32px; padding-top: 12px; font-size: 13px; color: #aaa;">
         EduVision · your daily morning education digest
       </div>
